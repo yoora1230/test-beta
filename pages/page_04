@@ -3,7 +3,8 @@ from typing import Dict
 
 import streamlit as st
 
-st.set_page_config(page_title="현재 예상점수", page_icon="🎯", layout="wide")
+st.set_page_config(page_title='현재 예상점수', page_icon='🎯', layout='wide')
+
 
 SUBJECTS = ["국어", "수학", "영어", "과학", "사회"]
 
