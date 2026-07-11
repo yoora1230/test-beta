@@ -11,6 +11,7 @@ SUBJECTS = ["국어", "수학", "영어", "과학", "사회"]
 
 
 def init_state() -> None:
+    """여러 페이지에서 공통으로 사용할 세션 데이터를 준비합니다."""
     defaults = {
         "mock_scores": [],
         "wrong_questions": [],
@@ -63,10 +64,7 @@ def expected_score(subject: str) -> float:
 init_state()
 
 st.title("📚 나만의 시험 계획표")
-st.caption(
-    "왼쪽 사이드바에서 날짜별 계획표, 모의고사 성적, "
-    "오답 기록, 현재 예상점수 페이지를 각각 열 수 있습니다."
-)
+st.caption("각 기능은 pages 폴더 안의 별도 Python 파일로 분리되어 있습니다.")
 
 unsolved_total = sum(
     1
@@ -82,36 +80,31 @@ col3.metric("미해결 오답", f"{unsolved_total}문제")
 col4.metric("평균 예상점수", f"{sum(predictions) / len(predictions):.1f}점")
 
 st.divider()
-st.subheader("페이지 바로가기")
+st.subheader("페이지 구성")
 
-col1, col2 = st.columns(2)
+left, right = st.columns(2)
 
-with col1:
-    st.page_link(
-        "pages/1_날짜별_계획표.py",
-        label="날짜별 계획표",
-        icon="🗓️",
-        use_container_width=True,
-    )
-    st.page_link(
-        "pages/3_오답_기록.py",
-        label="오답 기록",
-        icon="📝",
-        use_container_width=True,
-    )
+with left:
+    with st.container(border=True):
+        st.markdown("### 🗓️ 날짜별 계획표")
+        st.write("시험일까지 날짜별 학습 계획을 만듭니다.")
+        st.write("교과서·자습서·문제집·프린트를 구분하여 배정합니다.")
 
-with col2:
-    st.page_link(
-        "pages/2_모의고사_성적.py",
-        label="모의고사 성적",
-        icon="📊",
-        use_container_width=True,
-    )
-    st.page_link(
-        "pages/4_현재_예상점수.py",
-        label="현재 예상점수",
-        icon="🎯",
-        use_container_width=True,
-    )
+    with st.container(border=True):
+        st.markdown("### 📝 오답 기록")
+        st.write("지금까지 틀린 문제와 해결 여부를 기록합니다.")
 
-st.info("각 페이지의 코드는 pages 폴더 안의 서로 다른 Python 파일에 들어 있습니다.")
+with right:
+    with st.container(border=True):
+        st.markdown("### 📊 모의고사 성적")
+        st.write("시험별 과목 점수를 저장하고 확인합니다.")
+
+    with st.container(border=True):
+        st.markdown("### 🎯 현재 예상점수")
+        st.write("최근 성적과 미해결 오답을 반영해 예상점수를 계산합니다.")
+
+st.info(
+    "왼쪽 사이드바에 표시되는 페이지 이름을 눌러 이동하세요. "
+    "홈 화면에서는 페이지 파일 경로를 직접 호출하지 않으므로 "
+    "StreamlitPageNotFoundError가 발생하지 않습니다."
+)
