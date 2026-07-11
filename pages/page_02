@@ -6,7 +6,8 @@ from typing import List
 
 import streamlit as st
 
-st.set_page_config(page_title="모의고사 성적", page_icon="📊", layout="wide")
+st.set_page_config(page_title='모의고사 성적', page_icon='📊', layout='wide')
+
 
 SUBJECTS = ["국어", "수학", "영어", "과학", "사회"]
 
